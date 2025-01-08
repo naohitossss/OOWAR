@@ -7,8 +7,5 @@ namespace MyGame {
 	public:
 		SelectScene(GameState& gameState);
 		void update();
-
-	private:
-		void drawUI();
 	};
 }

@@ -7,7 +7,5 @@ namespace MyGame {
 	public:
 		TitleScene(GameState& gameState);
 		void update();
-	private:
-		void drawUI();
 	};
 }
