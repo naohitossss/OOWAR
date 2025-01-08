@@ -12,9 +12,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{941d6a0e-de4e-4f13-ac2e-a6a4dbb1278c}</ProjectGuid>
+    <ProjectGuid>{1a3c1279-f802-4238-bb59-c5dd1e2de9b2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SLG</RootNamespace>
+    <RootNamespace>OOWAR</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -72,7 +72,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <DisableSpecificWarnings>26451;26812;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <BuildStlModules>false</BuildStlModules>
     </ClCompile>
@@ -115,16 +115,19 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\SLG\SLG\Game.cpp" />
-    <ClCompile Include="..\..\SLG\SLG\GameRule.cpp" />
-    <ClCompile Include="..\..\SLG\SLG\GameScene.cpp" />
-    <ClCompile Include="..\..\SLG\SLG\GameSceneL1.cpp" />
-    <ClCompile Include="..\..\SLG\SLG\Main.cpp" />
-    <ClCompile Include="..\..\SLG\SLG\RandomEnemyAI.cpp" />
-    <ClCompile Include="..\..\SLG\SLG\SelectScene.cpp" />
-    <ClCompile Include="..\..\SLG\SLG\stdafx.cpp" />
-    <ClCompile Include="..\..\SLG\SLG\Territory.cpp" />
-    <ClCompile Include="..\..\SLG\SLG\TitleScene.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameRule.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameSceneL1.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="RandomEnemyAI.cpp" />
+    <ClCompile Include="SelectScene.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Territory.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\engine\texture\box-shadow\128.png" />
@@ -330,6 +333,18 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game.hpp" />
+    <ClInclude Include="GameRule.hpp" />
+    <ClInclude Include="GameScene.hpp" />
+    <ClInclude Include="GameSceneL1.hpp" />
+    <ClInclude Include="IScene.hpp" />
+    <ClInclude Include="RandomEnemyAI.hpp" />
+    <ClInclude Include="SelectScene.hpp" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Territory.hpp" />
+    <ClInclude Include="TitleScene.hpp" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="App\example\obj\blacksmith.obj">
       <FileType>Document</FileType>
     </None>
@@ -413,18 +428,6 @@
     <None Include="App\example\shader\hlsl\terrain_normal.hlsl">
       <FileType>Document</FileType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\SLG\SLG\Game.hpp" />
-    <ClInclude Include="..\..\SLG\SLG\GameRule.hpp" />
-    <ClInclude Include="..\..\SLG\SLG\GameScene.hpp" />
-    <ClInclude Include="..\..\SLG\SLG\GameSceneL1.hpp" />
-    <ClInclude Include="..\..\SLG\SLG\IScene.hpp" />
-    <ClInclude Include="..\..\SLG\SLG\RandomEnemyAI.hpp" />
-    <ClInclude Include="..\..\SLG\SLG\SelectScene.hpp" />
-    <ClInclude Include="..\..\SLG\SLG\stdafx.h" />
-    <ClInclude Include="..\..\SLG\SLG\Territory.hpp" />
-    <ClInclude Include="..\..\SLG\SLG\TitleScene.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
