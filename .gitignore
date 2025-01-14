@@ -3,6 +3,9 @@
 .vscode/
 ## .vsconfig: 多分これも要らない
 *.vsconfig
+*.vcxproj.filters
+*.vcxproj
+*.editorconfig
 
 # Unity
 ## https://github.com/github/gitignore/blob/main/Unity.gitignore
