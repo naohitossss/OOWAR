@@ -62,7 +62,7 @@ namespace MyGame {
 
 			Line arrowLine{ start, end };
 
-			if (territory.getOwner() == Owner::Player) {
+			if (territory.getOwner() == Territory::Owner::Player) {
 				arrowLine.drawArrow(30, SizeF{ 20, 40 }, Palette::Green);
 
 				// 線分の周りに幅を持たせた当たり判定を作成
@@ -84,8 +84,8 @@ namespace MyGame {
 		bool enemyExists = false;
 
 		for (const auto& territory : territories) {
-			if (territory.get().getOwner() == Owner::Player) playerExists = true;
-			if (territory.get().getOwner() == Owner::Enemy) enemyExists = true;
+			if (territory.get().getOwner() == Territory::Owner::Player) playerExists = true;
+			if (territory.get().getOwner() == Territory::Owner::Enemy) enemyExists = true;
 		}
 
 		isWin = !enemyExists;

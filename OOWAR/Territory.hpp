@@ -4,11 +4,13 @@
 #include <vector>
 #include <functional>
 namespace MyGame {
-	enum class Owner { Player, Enemy, Neutral };
+	
 
 	class Territory {
-	private:
 
+	public:
+		enum class Owner { Player, Enemy, Neutral };
+	private:
 		// メンバ変数
 		s3d::Vec2 m_position;
 		int m_soldiers;

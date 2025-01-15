@@ -49,7 +49,7 @@ namespace MyGame {
 	void Territory::setSoldiers(int value) { m_soldiers = value; }
 	const s3d::Color& Territory::getColor() const { return m_color; }
 	void Territory::setColor(const s3d::Color& color) { m_color = color; }
-	Owner Territory::getOwner() const { return m_owner; }
+	Territory::Owner Territory::getOwner() const { return m_owner; }
 	void Territory::setOwner(Owner owner) { m_owner = owner; }
 	const std::vector<std::reference_wrapper<Territory>>& Territory::getConnections() const { return m_connections; }
 
