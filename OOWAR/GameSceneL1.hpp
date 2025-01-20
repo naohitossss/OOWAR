@@ -1,10 +1,13 @@
 ﻿#pragma once
 
+#include "Game.hpp"
 #include "IScene.hpp"
 #include "Territory.hpp"
 #include "GameRule.hpp"
 #include "RandomEnemyAI.hpp"
 #include "GameSceneUI.hpp"
+#include "SelectScene.hpp"
+#include "GameScene.hpp"
 
 #include<vector>
 #include <Siv3D.hpp>
@@ -33,7 +36,6 @@ namespace MyGame {
 		void getEnemyTerritory();
 		void updateGrowth();
 		void enemyAttack();
-		void drawUI();
 
 	public:
 		GameSceneL1(GameState& gameState)

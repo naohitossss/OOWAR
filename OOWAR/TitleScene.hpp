@@ -10,6 +10,8 @@
 
 namespace MyGame {
 	class TitleScene : public IScene {
+	private:
+		void TitleTextEffect(const Vec2& penPos, double scale, const Glyph& glyph, const ColorF& color, double t);
 	public:
 		TitleScene(GameState& gameState);
 		void update();

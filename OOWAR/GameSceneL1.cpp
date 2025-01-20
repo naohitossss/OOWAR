@@ -36,6 +36,13 @@ namespace MyGame {
 	void GameSceneL1::update() {
 		UI.drawGameUI();
 
+		if (SimpleGUI::Button(U"Reset", Vec2{ 20, 20 })) {
+			resetGame();
+		}
+		if (SimpleGUI::Button(U"Back to Selet level", Vec2{ 20, 60 })) {
+			m_gameState.m_scene = std::move(std::make_unique<SelectScene>(m_gameState));
+		}
+
 		m_gameRule.checkGameOver(m_territories, m_isWin, m_isLose);
 
 		if (m_isWin || m_isLose) {
@@ -77,14 +84,6 @@ namespace MyGame {
 		}
 
 
-	}
-	void GameSceneL1::drawUI() {
-		if (SimpleGUI::Button(U"Reset", Vec2{ 20, 20 })) {
-			resetGame();
-		}
-		if (SimpleGUI::Button(U"Back to Selet level", Vec2{ 20, 60 })) {
-			resetGame();
-		}
 	}
 
 	void GameSceneL1::updateGrowth() {

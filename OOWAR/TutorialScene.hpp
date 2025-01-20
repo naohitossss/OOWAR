@@ -4,6 +4,10 @@
 #include "Territory.hpp"
 #include "GameRule.hpp"
 #include "RandomEnemyAI.hpp"
+#include "GameSceneUI.hpp"
+#include "TitleScene.hpp"
+#include "GameScene.hpp"
+#include "GameText.hpp"
 
 #include<vector>
 #include <Siv3D.hpp>
@@ -17,9 +21,13 @@ namespace MyGame {
 		std::vector<std::reference_wrapper<Territory>> m_territories;
 		std::vector<std::reference_wrapper<Territory>> m_enemyTerritories;
 		GameRule m_gameRule;
+		GameSceneUI UI;
 		RandomEnemyAI m_randomAI;
+		GameText gameText;
 		Effect m_effect;
 		Font m_font;
+		Font tutorialTextfont{ 25 };
+		Vec2 tutorialTextPos{ 300,400 };
 		Stopwatch m_growthTimer;
 		Stopwatch m_AITimer;
 		const int GROWTH_TIME = 3;
@@ -29,9 +37,34 @@ namespace MyGame {
 
 		void getEnemyTerritory();
 		void enemyAttack();
-		void drawUI();
-		void drawGameOverScreen();
 		void updateGrowth();
+		void drawArrow(const Vec2& startPos, const Vec2& endPos);
+
+		//チュートリアルステップ
+		struct TutorialStep
+		{
+			String text;        
+			Vec2 arrowStartPos; // 矢印の始点
+			Vec2 arrowEndPos;   // 矢印の終点
+		};
+		
+		Array<TutorialStep> m_steps = {
+			{U"In this game, you need to take all of the clycle's control to win. If all your clycle is taken, you lose." },
+			{U"The Blue 〇 is belongs to you.",m_playerTerritory.getPosition(), tutorialTextPos },
+			{U"And the gray 〇 don't belong to anyone.", m_neutralTerritory1.getPosition(), tutorialTextPos },
+			{U"The Red 〇 is belongs to your Enemy",m_enemyTerritory.getPosition(), tutorialTextPos},
+			{U"You can 'clic' the green '→' to attack or move your ● to other one",m_playerTerritory.getPosition() + (m_playerTerritory.getPosition() - m_neutralTerritory1.getPosition()).normalized() * - 200, tutorialTextPos},
+			{U"one 'clic' move only one ●.But you can use the Bottom to change the number.",(20, 460), tutorialTextPos},
+			{U"Now pleace take concltro of the gray 〇"},
+			{U"Good job !"},
+			{U"Every 〇 will get their ● per 3 secend.That mean you have more territorys you have more adventage"},
+			{U"But be careful.You enemy also can attack or move."},
+			{U"Now lets try to win this game"},
+			{U"You can reset the game to restart the tutorial or 'Back to Title'."}
+		};
+
+		// 現在表示中のチュートリアルステップ
+		size_t m_currentStep = 0;
 
 	public:
 		TutorialScene(GameState& gameState)
@@ -44,8 +77,8 @@ namespace MyGame {
 			FontAsset::Register(U"Default", 20);
 			setupConnections();
 			resetGame();
-			m_growthTimer.start();
-			m_AITimer.start();
+			m_growthTimer.pause();
+			m_AITimer.pause();
 		};
 
 		void setupConnections();

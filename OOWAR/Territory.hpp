@@ -30,7 +30,6 @@ namespace MyGame {
 		// コンストラクタ
 		Territory(s3d::Vec2 pos, int soldiers, int growth, s3d::Color color, Owner owner);
 
-		// 更新処理
 		void update();
 
 		// リセット処理

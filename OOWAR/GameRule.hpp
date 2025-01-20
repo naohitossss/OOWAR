@@ -20,6 +20,7 @@ namespace MyGame {
 		bool update(double t) override {
 			const HSV color{ (180 - m_score * 1.8), 1.0 - (t * 2.0) };
 			m_font(m_score).drawAt(m_start.movedBy(0, t * -120), color);
+			m_font(m_score).drawAt(m_start.movedBy(0, t * -120), color);
 			return (t < 0.5);
 		}
 	};

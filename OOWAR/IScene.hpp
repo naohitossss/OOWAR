@@ -11,9 +11,7 @@ namespace MyGame {
 
 	public:
 		IScene(GameState& gameState) : m_gameState(gameState) {}
-		virtual ~IScene() {
-			//Print << U"deleted";
-		}
+		virtual ~IScene() {}
 
 		virtual void update() = 0;
 	};

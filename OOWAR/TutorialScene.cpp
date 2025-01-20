@@ -26,13 +26,59 @@ namespace MyGame {
 		m_AITimer.restart();
 	}
 
+	void TutorialScene::drawArrow(const Vec2& startPos, const Vec2& endPos)
+	{
+		if (startPos == endPos) return;
+		Vec2 direction = (endPos - startPos).normalized();
+		s3d::Line arrowLine{ startPos + (direction * 200), startPos + (direction * 50) };
+		arrowLine.drawArrow(30, SizeF{20, 40}, Palette::Red);
+	}
+
 	void TutorialScene::update() {
-		drawUI();
+
+		UI.drawGameUI();
+
+		if (SimpleGUI::Button(U"Reset", Vec2{ 20, 20 })) {
+			resetGame();
+		}
+		if (SimpleGUI::Button(U"Back to Title", Vec2{ 20, 60 })) {
+			m_gameState.m_scene = std::move(std::make_unique<TitleScene>(m_gameState));
+		}
+
+		//チュートリアル進行
+		if (m_currentStep != 6 && m_currentStep != 10)
+		{
+			if (SimpleGUI::Button(U"Next Tutorial", Vec2{ 600, 550 }))
+			{
+				if (m_currentStep + 1 < m_steps.size())
+				{
+					m_currentStep++;
+				}
+			}
+		}
+		else if (m_currentStep == 6)
+		{
+			if (m_neutralTerritory1.getOwner() == Territory::Owner::Player)
+			{
+				m_currentStep++;
+			}
+		}
+		else if (m_currentStep == 8 && !m_growthTimer.isRunning())
+		{
+			m_growthTimer.start();
+		}
+		else if (m_currentStep == 10 && !m_AITimer.isRunning())
+		{
+			m_AITimer.start();
+		}
+		
+		tutorialTextfont(gameText.WrapText(m_steps[m_currentStep].text, tutorialTextfont, 500)).draw(tutorialTextPos);
+		drawArrow(m_steps[m_currentStep].arrowStartPos, m_steps[m_currentStep].arrowEndPos);
 
 		m_gameRule.checkGameOver(m_territories, m_isWin, m_isLose);
 
 		if (m_isWin || m_isLose) {
-			drawGameOverScreen();
+			UI.drawGameOverScreen(m_isWin, m_isLose);
 			return;
 		}
 
@@ -41,14 +87,19 @@ namespace MyGame {
 			m_gameRule.drawArrowsAndHandleClicks(territory);
 		}
 
-		if (m_growthTimer.s() >= GROWTH_TIME) {
-			updateGrowth();
-			m_growthTimer.restart();
+		if (m_growthTimer.isRunning())
+		{
+			if (m_growthTimer.s() >= GROWTH_TIME) {
+				updateGrowth();
+				m_growthTimer.restart();
+			}
 		}
-
-		if (m_AITimer.s() >= AI_TIME) {
-			enemyAttack();
-			m_AITimer.restart();
+		if (m_AITimer.isRunning())
+		{
+			if(m_AITimer.s() >= AI_TIME){
+				enemyAttack();
+				m_AITimer.restart();
+			}
 		}
 
 		m_effect.update();
@@ -71,35 +122,9 @@ namespace MyGame {
 
 
 	}
-	void TutorialScene::drawUI() {
-		if (SimpleGUI::Button(U"Reset", Vec2{ 20, 20 })) {
-			resetGame();
-		}
-		if (SimpleGUI::Button(U"Back to Selet level", Vec2{ 20, 60 })) {
-			resetGame();
-		}
 
-		const Array<std::pair<String, int>> soldierButtons = {
-			{U"兵士数を1に設定", 1},
-			{U"兵士数を5に設定", 5},
-			{U"兵士数を10に設定", 10}
-		};
 
-		for (int i = 0; i < soldierButtons.size(); ++i) {
-			if (SimpleGUI::Button(soldierButtons[i].first, Vec2{ 20, 460 + i * 40 })) {
-				m_gameRule.setAttackSoldiers(soldierButtons[i].second);
-			}
-		}
-	}
 
-	void TutorialScene::drawGameOverScreen() {
-		if (m_isWin) {
-			FontAsset(U"Default")(U"勝利！").drawAt(Scene::Center(), Palette::Yellow);
-		}
-		else if (m_isLose) {
-			FontAsset(U"Default")(U"敗北...").drawAt(Scene::Center(), Palette::Red);
-		}
-	}
 
 	void TutorialScene::updateGrowth() {
 		for (auto& territory : m_territories) {
