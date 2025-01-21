@@ -81,7 +81,7 @@ namespace MyGame {
 		// テキスト描画と矢印描画
 		if (m_currentStep < m_steps.size())
 		{
-			tutorialTextfont(gameText.WrapText(m_steps[m_currentStep].text, tutorialTextfont, 500)).draw(tutorialTextPos);
+			tutorialTextfont(gameText.wrapText(m_steps[m_currentStep].text, tutorialTextfont, 500)).draw(tutorialTextPos);
 			drawArrow(m_steps[m_currentStep].arrowStartPos, m_steps[m_currentStep].arrowEndPos);
 		}
 

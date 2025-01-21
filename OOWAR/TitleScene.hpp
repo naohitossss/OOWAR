@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Game.hpp"
 #include "GameScene.hpp"
+#include "GameText.hpp"
 #include "SelectScene.hpp"
 #include "TutorialScene.hpp"
 
@@ -11,7 +12,10 @@
 namespace MyGame {
 	class TitleScene : public IScene {
 	private:
-		/*void TitleTextEffect(const Vec2& penPos, double scale, const Glyph& glyph, const ColorF& color, double t);*/
+		Stopwatch textStopwatch{ StartImmediately::Yes };
+		const Font titleTextfont{ FontMethod::MSDF, 100, Typeface::Bold };
+		const String titleText = U"〇●大戦";
+		GameText gametext;
 	public:
 		TitleScene(GameState& gameState);
 		void update();
