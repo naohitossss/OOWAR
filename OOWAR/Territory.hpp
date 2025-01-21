@@ -23,12 +23,27 @@ namespace MyGame {
 		s3d::Vec2 m_initialPosition;
 		int m_initialSoldiers;
 		int m_initialGrowthRate;
+		int maxDiameter, minDiameter;
 		s3d::Color m_initialColor;
 		Owner m_initialOwner;
 
 	public:
 		// コンストラクタ
-		Territory(s3d::Vec2 pos, int soldiers, int growth, s3d::Color color, Owner owner);
+		Territory(s3d::Vec2 pos, int soldiers, int growth, s3d::Color color, Owner owner)
+			: m_position(pos)
+			, m_soldiers(soldiers)
+			, m_growthRate(growth)
+			, m_color(color)
+			, m_owner(owner)
+			, m_initialPosition(pos)
+			, m_initialSoldiers(soldiers)
+			, m_initialGrowthRate(growth)
+			, m_initialColor(color)
+			, m_initialOwner(owner)
+			, maxDiameter(40)
+			, minDiameter(10) {
+			
+		};
 
 		void update();
 

@@ -7,7 +7,7 @@
 #include "RandomEnemyAI.hpp"
 #include "GameSceneUI.hpp"
 #include "SelectScene.hpp"
-#include "GameScene.hpp"
+#include "GameScene.hpp"]
 
 #include<vector>
 #include <Siv3D.hpp>

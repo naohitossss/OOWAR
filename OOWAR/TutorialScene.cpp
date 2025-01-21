@@ -42,16 +42,26 @@ namespace MyGame {
 			resetGame();
 		}
 		if (SimpleGUI::Button(U"Back to Title", Vec2{ 20, 60 })) {
-			m_gameState.m_scene = std::move(std::make_unique<TitleScene>(m_gameState));
+			m_gameState.m_scene = std::make_unique<TitleScene>(m_gameState);
 		}
 
-		//チュートリアル進行
-		if (m_currentStep != 6 && m_currentStep != 10)
+		// ステップの範囲チェック
+		if (m_currentStep >= m_steps.size())
+		{
+			m_currentStep = m_steps.size() - 1; // 範囲外なら最後のステップに固定
+		}
+
+		// チュートリアル進行
+		if (m_currentStep != 6 && m_currentStep != 10 && m_currentStep < m_steps.size())
 		{
 			if (SimpleGUI::Button(U"Next Tutorial", Vec2{ 600, 550 }))
 			{
 				if (m_currentStep + 1 < m_steps.size())
 				{
+					if (m_currentStep == 8)
+					{
+						m_growthTimer.start();
+					}
 					m_currentStep++;
 				}
 			}
@@ -63,22 +73,24 @@ namespace MyGame {
 				m_currentStep++;
 			}
 		}
-		else if (m_currentStep == 8 && !m_growthTimer.isRunning())
-		{
-			m_growthTimer.start();
-		}
 		else if (m_currentStep == 10 && !m_AITimer.isRunning())
 		{
 			m_AITimer.start();
 		}
-		
-		tutorialTextfont(gameText.WrapText(m_steps[m_currentStep].text, tutorialTextfont, 500)).draw(tutorialTextPos);
-		drawArrow(m_steps[m_currentStep].arrowStartPos, m_steps[m_currentStep].arrowEndPos);
 
+		// テキスト描画と矢印描画
+		if (m_currentStep < m_steps.size())
+		{
+			tutorialTextfont(gameText.WrapText(m_steps[m_currentStep].text, tutorialTextfont, 500)).draw(tutorialTextPos);
+			drawArrow(m_steps[m_currentStep].arrowStartPos, m_steps[m_currentStep].arrowEndPos);
+		}
+
+		// ゲーム進行
 		m_gameRule.checkGameOver(m_territories, m_isWin, m_isLose);
 
 		if (m_isWin || m_isLose) {
 			UI.drawGameOverScreen(m_isWin, m_isLose);
+			m_currentStep = m_steps.size() - 1; // 最後のステップに固定
 			return;
 		}
 
@@ -87,23 +99,19 @@ namespace MyGame {
 			m_gameRule.drawArrowsAndHandleClicks(territory);
 		}
 
-		if (m_growthTimer.isRunning())
-		{
-			if (m_growthTimer.s() >= GROWTH_TIME) {
-				updateGrowth();
-				m_growthTimer.restart();
-			}
+		if (m_growthTimer.isRunning() && m_growthTimer.s() >= GROWTH_TIME) {
+			updateGrowth();
+			m_growthTimer.restart();
 		}
-		if (m_AITimer.isRunning())
-		{
-			if(m_AITimer.s() >= AI_TIME){
-				enemyAttack();
-				m_AITimer.restart();
-			}
+
+		if (m_AITimer.isRunning() && m_AITimer.s() >= AI_TIME) {
+			enemyAttack();
+			m_AITimer.restart();
 		}
 
 		m_effect.update();
 	}
+
 
 	void TutorialScene::getEnemyTerritory() {
 		for (auto& territory : m_territories) {

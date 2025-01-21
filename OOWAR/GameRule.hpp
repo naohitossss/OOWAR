@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Territory.hpp"
+#include "LinearBallEffect.hpp"
 
 #include<vector>
 #include <Siv3D.hpp>
@@ -18,9 +19,12 @@ namespace MyGame {
 			, m_font{ font } {}
 
 		bool update(double t) override {
+			// 色の設定 (スコアに応じて色が変化)
 			const HSV color{ (180 - m_score * 1.8), 1.0 - (t * 2.0) };
-			m_font(m_score).drawAt(m_start.movedBy(0, t * -120), color);
-			m_font(m_score).drawAt(m_start.movedBy(0, t * -120), color);
+			String text = U"+" + ToString(m_score);
+			// スコアを指定された位置に描画
+			m_font(text).drawAt(m_start.movedBy(0, t * -120), color);
+			// エフェクトの生存期間を 0.5 秒に設定
 			return (t < 0.5);
 		}
 	};
@@ -28,6 +32,7 @@ namespace MyGame {
 	class GameRule{
 	private:
 		int m_attackSoldiers; // 攻撃に使用する兵士数
+		Effect m_effect;
 
 	public:
 		// コンストラクタ

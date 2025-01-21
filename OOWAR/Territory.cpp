@@ -2,19 +2,6 @@
 
 namespace MyGame {
 
-	// コンストラクタ
-	Territory::Territory(s3d::Vec2 pos, int soldiers, int growth, s3d::Color color, Owner owner)
-		: m_position(pos)
-		, m_soldiers(soldiers)
-		, m_growthRate(growth)
-		, m_color(color)
-		, m_owner(owner)
-		, m_initialPosition(pos)
-		, m_initialSoldiers(soldiers)
-		, m_initialGrowthRate(growth)
-		, m_initialColor(color)
-		, m_initialOwner(owner) {}
-
 	// 更新処理
 	void Territory::update() {
 		if (m_owner != Owner::Neutral) {

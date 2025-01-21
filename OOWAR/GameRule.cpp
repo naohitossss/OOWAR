@@ -9,8 +9,12 @@ namespace MyGame {
 		if (source.getSoldiers() < m_attackSoldiers) {
 			return;
 		}
+		
 
 		source.setSoldiers(source.getSoldiers() - m_attackSoldiers);
+
+		m_effect.add<LinearBallEffect>(source.getPosition(), target.getPosition(), source.getColor());
+		FontAsset(U"Default")(source.getPosition()).drawAt(Scene::Center(), Palette::Yellow);
 
 		if (source.getColor() != target.getColor()) {
 			if (target.getSoldiers() > 0) {
