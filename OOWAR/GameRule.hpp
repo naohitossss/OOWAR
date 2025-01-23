@@ -32,7 +32,6 @@ namespace MyGame {
 	class GameRule{
 	private:
 		int m_attackSoldiers; // 攻撃に使用する兵士数
-		Effect m_effect;
 
 	public:
 		// コンストラクタ
@@ -42,10 +41,10 @@ namespace MyGame {
 		void attack(Territory& source, Territory& target);
 
 		// 敵の攻撃処理
-		void enemyAttack(Territory& source, Territory& target, int attackSoldiers);
+		void enemyAttack(Territory& source, Territory& target, int attackSoldiers, Effect& effect);
 
 		// 矢印の描画とクリック処理
-		void drawArrowsAndHandleClicks(Territory& territory);
+		void drawArrowsAndHandleClicks(Territory& territory, Effect& effect);
 
 		// ゲームオーバー判定
 		void checkGameOver(const std::vector<std::reference_wrapper<Territory>>& territories, bool& isWin, bool& isLose);

@@ -16,6 +16,7 @@ namespace MyGame {
 		const Font titleTextfont{ FontMethod::MSDF, 100, Typeface::Bold };
 		const String titleText = U"〇●大戦";
 		GameText gametext;
+
 	public:
 		TitleScene(GameState& gameState);
 		void update();

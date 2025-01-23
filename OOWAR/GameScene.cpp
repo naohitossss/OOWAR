@@ -12,10 +12,5 @@ namespace MyGame {
 		if (MouseL.down()) {
 			m_gameState.m_scene = std::move(std::make_unique<TitleScene>(m_gameState));
 		}
-		Print << U"Game";
-
-		/*for (auto n : m_territories) {
-			n.init();
-		}*/
 	}
 }

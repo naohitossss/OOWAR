@@ -13,9 +13,6 @@ namespace MyGame {
 
 		source.setSoldiers(source.getSoldiers() - m_attackSoldiers);
 
-		m_effect.add<LinearBallEffect>(source.getPosition(), target.getPosition(), source.getColor());
-		FontAsset(U"Default")(source.getPosition()).drawAt(Scene::Center(), Palette::Yellow);
-
 		if (source.getColor() != target.getColor()) {
 			if (target.getSoldiers() > 0) {
 				target.setSoldiers(target.getSoldiers() - m_attackSoldiers);
@@ -32,10 +29,11 @@ namespace MyGame {
 		}
 	}
 
-	void GameRule::enemyAttack(Territory& source, Territory& target, int attackSoldiers) {
+	void GameRule::enemyAttack(Territory& source, Territory& target, int attackSoldiers, Effect& effect) {
 		if (source.getSoldiers() < attackSoldiers) {
 			return;
 		}
+		effect.add<LinearBallEffect>(source.getPosition(), target.getPosition(), source.getColor());
 
 		source.setSoldiers(source.getSoldiers() - attackSoldiers);
 
@@ -55,7 +53,7 @@ namespace MyGame {
 		}
 	}
 
-	void GameRule::drawArrowsAndHandleClicks(Territory& territory) {
+	void GameRule::drawArrowsAndHandleClicks(Territory& territory,Effect& effect) {
 		for (auto& targetRef : territory.getConnections()) {
 			Territory& target = targetRef.get();
 			Vec2 direction = (target.getPosition() - territory.getPosition()).normalized();
@@ -74,6 +72,7 @@ namespace MyGame {
 					Cursor::RequestStyle(CursorStyle::Hand);
 					if (MouseL.down() && territory.getSoldiers() >= m_attackSoldiers) {
 						attack(territory, target);
+						effect.add<LinearBallEffect>(territory.getPosition(), target.getPosition(), territory.getColor());
 					}
 				}
 			}

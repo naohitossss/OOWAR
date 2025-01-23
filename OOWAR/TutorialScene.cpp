@@ -96,7 +96,7 @@ namespace MyGame {
 
 		for (auto& territory : m_territories) {
 			territory.get().draw();
-			m_gameRule.drawArrowsAndHandleClicks(territory);
+			m_gameRule.drawArrowsAndHandleClicks(territory, m_effect);
 		}
 
 		if (m_growthTimer.isRunning() && m_growthTimer.s() >= GROWTH_TIME) {
@@ -125,7 +125,7 @@ namespace MyGame {
 			Territory& source = territory.get();
 			Territory& target = m_randomAI.randomAttack(source);
 			int attackSoldier = m_randomAI.randomSoldierNum(source.getSoldiers());
-			m_gameRule.enemyAttack(source, target, attackSoldier);
+			m_gameRule.enemyAttack(source, target, attackSoldier,m_effect);
 		}
 
 

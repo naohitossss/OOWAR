@@ -1,6 +1,11 @@
 ﻿#pragma once
-
+#include "Game.hpp"
 #include "IScene.hpp"
+#include "Territory.hpp"
+#include "GameRule.hpp"
+#include "RandomEnemyAI.hpp"
+#include "GameSceneUI.hpp"
+#include "SelectScene.hpp"
 
 namespace MyGame {
 	class GameScene : public IScene {

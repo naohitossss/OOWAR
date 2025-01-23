@@ -19,7 +19,7 @@ namespace MyGame {
 			const Vec2& startPos,
 			const Vec2& endPos,
 			const ColorF& color = Palette::White,
-			double duration = 2.0,  
+			double duration = 0.5,  
 			double radius = 10.0           
 		);
 
